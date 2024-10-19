@@ -51,6 +51,90 @@ Root
     C
 ```
 
+- 在思维导图中，节点之间的缩进用于表示层次关系。但是，具体的缩进量并不重要，重要的是相对缩进。
+- Mermaid 会根据相对缩进来确定节点之间的关系。如果缩进不明确，Mermaid 会尝试通过已知的关系来补偿。
+- 示例 - 假设我们有以下思维导图
+
+```
+mindmap
+    Root
+        A
+            B
+          C
+```
+```mermaid
+mindmap
+    Root
+        A
+            B
+          C
+```
+
+- 在这个示例中：
+  - A 是 Root 的子节点。
+  - B 是 A 的子节点。
+  - C 的缩进介于 A 和 B 之间，导致层次关系不明确。
+- 解释
+  - 明确的关系：
+    - B 明显是 A 的子节点，因为 B 的缩进比 A 大。
+  - 不明确的关系：
+    - C 的缩进比 B 小，但比 A 大。这使得 C 的层次关系不明确。
+    - C 既不是 B 的子节点（因为它的缩进比 B 小），也不是 B 的同级节点（因为它的缩进不同）。
+  - Mermaid 的处理方式：
+    - Mermaid 会寻找最近的一个具有更小缩进的节点作为父节点。
+    - 在这个例子中，A 是最近的一个具有更小缩进的节点。
+    - 因此，Mermaid 会将 C 作为 A 的子节点，而不是 B 的子节点或兄弟节点。
+- 如果想要表达的 —— C 是 B 的子节点，那么你可以这么写：
+
+```
+mindmap
+    Root
+        A
+            B
+                C
+```
+```mermaid
+mindmap
+    Root
+        A
+            B
+                C
+```
+
+- 如果想要表达的 —— C 是 B 的兄弟节点，那么你可以这么写：
+
+```
+mindmap
+    Root
+        A
+            B
+            C
+```
+```mermaid
+mindmap
+    Root
+        A
+            B
+            C
+```
+- 如果想要表达的 —— C 是 A 的兄弟节点，那么你可以这么写：
+
+```
+mindmap
+    Root
+        A
+            B
+        C
+```
+```mermaid
+mindmap
+    Root
+        A
+            B
+        C
+```
+
+
 ## 📒 notes - 节点形状 - 默认形状节点
 
 ```
@@ -140,7 +224,7 @@ mindmap
   {{I am a hexagon}}
 ```
 
-## 📒 notes - 图标语法 - `::icon()`
+## 📒 notes - 图标语法 - `::icon()` - 注：不好使
 
 > As with flowcharts you can add icons to your nodes but with an updated syntax. The styling for the font based icons are added during the integration so that they are available for the web page. This is not something a diagram author can do but has to be done with the site administrator or the integrator. Once the icon fonts are in place you add them to the mind map nodes using the ::icon() syntax. You place the classes for the icon within the parenthesis like in the following example where icons for material design and Font Awesome 5 are displayed. The intention is that this approach should be used for all diagrams supporting icons. Experimental feature: This wider scope is also the reason Mindmaps are experimental as this syntax and approach could change.
 > from: mermaid 官方文档。
@@ -178,8 +262,17 @@ mindmap
     Another node::icon(mdi mdi-home)
     Child node
 ```
-- **问：如果使用图标的话，可以在 GitHub 上正常渲染出来吗？**
-  - 测试结果：不行。
+- **问：如果使用图标的话，可以正常渲染出来吗？**
+  - 测试结果如下：
+    - 下面的截图来自 mermaid 官方的渲染结果：
+      - ![](md-imgs/2024-10-19-10-46-00.png)
+      - 这可能是我们想要的结果，官方站点或许集成了这些图标，打开站点的时候就把这些字体图标请求过来了。
+    - 下面的截图来自 GitHub 上的渲染结果：
+      - ![](md-imgs/2024-10-19-10-47-10.png)
+      - 两个图标都没法渲染，但是图标的位置是被保留了。
+    - 下面的截图来自本地 VSCode 中的 markdown preview enhanced 插件的渲染结果：
+      - ![](md-imgs/2024-10-19-10-45-27.png)
+      - 成功渲染了一个图标。
 ```
 mindmap
   Root
@@ -197,6 +290,76 @@ mindmap
     ::icon(mdi mdi-skull-outline)
 ```
 
+## 📒 notes - 图标的替代方案 - 使用 emoji
+
+```
+mindmap
+  Root
+    房子 emoji 👉 🏠
+```
+```mermaid
+mindmap
+  Root
+    房子 emoji 👉 🏠
+```
+
+## 📒 notes - 样式语法 - `:::className` - 注：不好使
+
+- 和 icon 一样，需要站点集成，才能正常渲染。
+
+```
+mindmap
+    Root
+        A[A]
+        :::urgent large
+        B(B)
+        C
+```
+```mermaid
+mindmap
+    Root
+        A[A]
+        :::urgent large
+        B(B)
+        C
+```
+
+## 📒 notes - Markdown Strings 特性
+
+- “Markdown Strings”特性，该特性增强了思维导图的功能，支持更多的文本格式选项，并且能够自动换行。
+- Markdown Strings 特性
+  - 增强功能：通过使用更灵活的字符串类型，支持文本格式化选项，如加粗和斜体。
+  - 自动换行：自动处理标签内的文本换行，当文本过长时会自动换行。
+  - 多行文本：允许在标签内直接使用换行符来创建多行文本。
+- 代码示例：
+```
+mindmap
+    id1["`**Root** with
+a second line
+Unicode works too: 🤓`"]
+      id2["`The dog in **the** hog... a *very long text* that wraps to a new line`"]
+      id3[Regular labels still works]
+```
+```mermaid
+mindmap
+    id1["`**Root** with
+a second line
+Unicode works too: 🤓`"]
+      id2["`The dog in **the** hog... a *very long text* that wraps to a new line`"]
+      id3[Regular labels still works]
+```
+- 解释
+  - id1：
+    - `**Root**`：加粗显示 "Root"。
+    - 多行文本：文本中包含换行符，可以显示多行文本。
+    - Unicode 支持：例如表情符号 🤓 可以正常显示。
+  - id2：
+    - `**the**`：加粗显示 "the"。
+    - `*very long text*`：斜体显示 "very long text"。
+    - 自动换行：当文本过长时，会自动换行到下一行。
+  - id3：
+    - 普通标签：传统的标签仍然有效，不包含任何 Markdown 格式。
+  - 注：上述 id1、id2、id3 仅仅是为了方便笔记记录，方便标注说明。即便删除 id1、id2、id3 它们，渲染结果依旧保持不变。
 
 ## 💻 demo - 绘制思维导图测试
 
