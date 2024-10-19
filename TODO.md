@@ -1,2 +1,4 @@
-- [ ] 快速了解 mermaid 是什么
-  - [ ] 0001. mermaid 是什么？
+- mermaid 相关资料
+  - [ ] [0002. mermaid 相关链接](./0002.%20mermaid%20%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5/README.md)
+- 快速了解 mermaid 是什么
+  - [ ] [0001. mermaid 是什么？](./0001.%20mermaid%20%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/README.md)
