@@ -142,6 +142,13 @@ mindmap
 
 ## 📒 notes - 图标语法 - `::icon()`
 
+> As with flowcharts you can add icons to your nodes but with an updated syntax. The styling for the font based icons are added during the integration so that they are available for the web page. This is not something a diagram author can do but has to be done with the site administrator or the integrator. Once the icon fonts are in place you add them to the mind map nodes using the ::icon() syntax. You place the classes for the icon within the parenthesis like in the following example where icons for material design and Font Awesome 5 are displayed. The intention is that this approach should be used for all diagrams supporting icons. Experimental feature: This wider scope is also the reason Mindmaps are experimental as this syntax and approach could change.
+> from: mermaid 官方文档。
+
+> [!NOTE]
+> 不建议使用 icon。
+> 从官方的这一大段描述来看，大概就是在告诉我们，icon 这个功能，现在还不完善，存在一系列的问题。主要原因在于图标这玩意儿不好加，可能在编写文档的作者电脑上可以正常看到这些 icon（因为装了对应的图标库），但是在用户设备上，可能就无法正常显示了。而且有些图标可能可以正常展示，而有些图标或许又显示不了（这可能跟图标库的版本有关）。
+
 - 图标字体的集成
   - 集成过程：图标字体的样式需要在网页集成过程中添加，以便在网页上可用。
   - 管理员或集成者操作：这一步骤通常由网站管理员或集成者完成，而不是图表作者。这意味着你需要确保你的网站或应用已经集成了所需的图标字体库（如 Material Design 或 Font Awesome 5）。
@@ -172,6 +179,23 @@ mindmap
     Child node
 ```
 - **问：如果使用图标的话，可以在 GitHub 上正常渲染出来吗？**
+  - 测试结果：不行。
+```
+mindmap
+  Root
+    A
+    ::icon(fa fa-book)
+    B(B)
+    ::icon(mdi mdi-skull-outline)
+```
+```mermaid
+mindmap
+  Root
+    A
+    ::icon(fa fa-book)
+    B(B)
+    ::icon(mdi mdi-skull-outline)
+```
 
 
 ## 💻 demo - 绘制思维导图测试
