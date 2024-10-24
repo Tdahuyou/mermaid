@@ -1,8 +1,7 @@
 # 0003. Mindmap with Mermaid.js
 
-## 📝 summary
-
-- 在 mermaid 中绘制 mindmap 思维导图。
+- 📝 summary
+  - 在 mermaid 中绘制 mindmap 思维导图。
 
 ## 🔗 links
 
